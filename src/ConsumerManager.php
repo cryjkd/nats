@@ -42,12 +42,19 @@ class ConsumerManager
             if (! $instance instanceof AbstractConsumer) {
                 continue;
             }
-            $annotation->subject && $instance->setSubject($annotation->subject);
-            $annotation->queue && $instance->setQueue($annotation->queue);
-            $annotation->name && $instance->setName($annotation->name);
-            $annotation->pool && $instance->setPool($annotation->pool);
 
-            $nums = $annotation->nums;
+            $subject = $instance->getSubject();
+            $queue = $instance->getQueue();
+            $name = $instance->getName();
+            $pool = $instance->getPool();
+            $nums = $instance->getNums();
+
+            !$subject && $annotation->subject && $instance->setSubject($annotation->subject);
+            !$queue && $annotation->queue && $instance->setQueue($annotation->queue);
+            $name == 'NatsConsumer' && $annotation->name && $instance->setName($annotation->name);
+            $pool == 'default' && $annotation->pool && $instance->setPool($annotation->pool);
+
+            $nums = $nums > 1 ? $nums : $annotation->nums;
             $process = $this->createProcess($instance);
             $process->nums = $nums;
             $process->name = $instance->getName() . '-' . $instance->getSubject();
