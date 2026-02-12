@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Cryjkd\Nats\Driver;
 
-use Cryjkd\Contract\ConfigInterface;
+use Hyperf\Contract\ConfigInterface;
 use Cryjkd\Nats\Exception\ConfigNotFoundException;
 use Psr\Container\ContainerInterface;
 
