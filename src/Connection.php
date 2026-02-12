@@ -469,6 +469,7 @@ class Connection
     private function send($payload)
     {
         if (!$this->isConnected()) {
+            $this->logger->error('streamSocket is not connected');
             $this->reconnect();
         }
 
