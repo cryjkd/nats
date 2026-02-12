@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Cryjkd\Nats\Driver;
 
-use Cryjkd\Contract\StdoutLoggerInterface;
+use Hyperf\Contract\StdoutLoggerInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 
