@@ -372,7 +372,7 @@ class Connection
      */
     public function reconnect(): void
     {
-        $this->logger->info('========================reconnectreconnectreconnectreconnect', [$this->reconnects, $this->timeout]);
+        $this->logger->info('reconnect', [$this->reconnects, $this->timeout]);
         ++$this->reconnects;
         $this->close();
         $this->connect($this->timeout);
@@ -397,28 +397,17 @@ class Connection
             Coroutine::create(function () {
                 while (true) {
                     $exited = CoordinatorManager::until(Constants::WORKER_EXIT)->yield($this->timeout / 2);
-                    $this->logger->info('dddddddddddddd', [$this->timeout, $exited, intval(ini_get('default_socket_timeout'))]);
+                    $this->logger->info('heartbeat-1111', [$this->timeout, $exited, intval(ini_get('default_socket_timeout'))]);
                     if ($exited) {
                         break;
                     }
 
                     if (is_null($this->streamSocket)) {
-                        $this->logger->info('GGGGGGGGGGGGGGGGGGGG');
+                        $this->logger->info('heartbeat-222');
                         break;
                     }
 
-//                    $this->logger->info('333333333heartbeat');
-//                    $this->ping();
-                    try {
-                        $this->ping();
-                    } catch (Throwable $e) {
-                        $this->logger->error('NATS heartbeat failed', [
-                            'exception' => $e->getMessage(),
-                            'code'      => $e->getCode(),
-                        ]);
-
-                        $this->reconnect();
-                    }
+                    $this->ping();
                 }
             });
         }
