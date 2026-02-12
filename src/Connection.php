@@ -409,17 +409,17 @@ class Connection
                     }
 
 //                    $this->logger->info('333333333heartbeat');
-                    $this->ping();
-//                    try {
-//                        $this->ping();
-//                    } catch (Throwable $e) {
-//                        $this->logger->error('NATS heartbeat failed', [
-//                            'exception' => $e->getMessage(),
-//                            'code'      => $e->getCode(),
-//                        ]);
-//
-//                        $this->reconnect();
-//                    }
+//                    $this->ping();
+                    try {
+                        $this->ping();
+                    } catch (Throwable $e) {
+                        $this->logger->error('NATS heartbeat failed', [
+                            'exception' => $e->getMessage(),
+                            'code'      => $e->getCode(),
+                        ]);
+
+                        $this->reconnect();
+                    }
                 }
             });
         }
