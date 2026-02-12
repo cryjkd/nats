@@ -211,7 +211,6 @@ class Connection
         $this->timeout = $timeout;
         $this->streamSocket = $this->getStream($this->options->getAddress(), $timeout);
         $this->setStreamTimeout($timeout);
-        $this->logger->info('ddddddconnectconnectconnectconnectconnectdddddddd', [$timeout]);
 
         $msg = 'CONNECT ' . $this->options;
         $this->send($msg);
@@ -487,18 +486,17 @@ class Connection
         while (true) {
             $written = @fwrite($this->streamSocket, $msg);
             if ($written === false) {
-                throw new \Exception('Error sending data');
-
-//                $this->logger->error('Error sending data');
-//                $this->reconnect();
-//                continue;
+//                throw new \Exception('Error sending data');
+                $this->logger->error('Error sending data');
+                $this->reconnect();
+                continue;
             }
 
             if ($written === 0) {
-                throw new \Exception('Broken pipe or closed connection');
-//                $this->logger->error('Broken pipe or closed connection');
-//                $this->reconnect();
-//                continue;
+//                throw new \Exception('Broken pipe or closed connection');
+                $this->logger->error('Broken pipe or closed connection');
+                $this->reconnect();
+                continue;
             }
 
             $len = ($len - $written);
