@@ -16,6 +16,7 @@ use Hyperf\Coordinator\Constants;
 use Hyperf\Coordinator\CoordinatorManager;
 use Hyperf\Coroutine\Coroutine;
 use Throwable;
+use function Hyperf\Support\make;
 
 /**
  * Connection Class.
@@ -74,12 +75,14 @@ class Connection
      */
     private ServerInfo $serverInfo;
 
+    protected StdoutLoggerInterface $logger;
+
     /**
      * Constructor.
      *
      * @param ConnectionOptions $options connection options object
      */
-    public function __construct(private ?ConnectionOptions $options = null, protected StdoutLoggerInterface $logger)
+    public function __construct(private ?ConnectionOptions $options = null)
     {
         $this->pings = 0;
         $this->pubs = 0;
@@ -89,6 +92,8 @@ class Connection
         if ($options === null) {
             $this->options = new ConnectionOptions();
         }
+
+        $this->logger = make(StdoutLoggerInterface::class);
     }
 
     /**
