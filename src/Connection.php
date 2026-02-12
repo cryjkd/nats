@@ -397,13 +397,11 @@ class Connection
             Coroutine::create(function () {
                 while (true) {
                     $exited = CoordinatorManager::until(Constants::WORKER_EXIT)->yield($this->timeout / 2);
-                    $this->logger->info('heartbeat-1111', [$this->timeout, $exited, intval(ini_get('default_socket_timeout'))]);
                     if ($exited) {
                         break;
                     }
 
                     if (is_null($this->streamSocket)) {
-                        $this->logger->info('heartbeat-222');
                         break;
                     }
 
