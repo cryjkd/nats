@@ -468,6 +468,10 @@ class Connection
      */
     private function send($payload)
     {
+        if (!$this->isConnected()) {
+            $this->reconnect();
+        }
+
         $msg = $payload . "\r\n";
         $len = strlen($msg);
         while (true) {
